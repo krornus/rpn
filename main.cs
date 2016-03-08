@@ -6,7 +6,7 @@ namespace Program
    {
      public static void Main(string[] args)
      {
-        RPNCalc.Calculate("12 2 + -");
+        Console.WriteLine(RPNCalc.Calculate("5 1 2 + 4 * + 3 -"));
      }
    }
 }
