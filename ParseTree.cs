@@ -4,15 +4,16 @@ using System.Collections.Generic;
 
 public class ParseTree 
 {
-   public static System.Collections.Generic.IEnumerable<KeyValuePair<string,string>> All(Tree<string, string> parse_tree, IEnumerable<string> enumerable_sentence)
+   public static IEnumerable<KeyValuePair<string,string>> 
+      All(Tree<string, string> parse_tree, IEnumerable<string> enumerable_sentence)
    {
-      // Create RPN stacks
       Stack<int> integers = new Stack<int>();
       Stack<char> operations = new Stack<char>();
 
       foreach(string value in enumerable_sentence)
       {
-         KeyValuePair<string, Node<string,string>> node_kvp = parse_tree.GetChildNodeByValue(value, Regex.IsMatch);
+         KeyValuePair<string, Node<string,string>> node_kvp
+            = parse_tree.GetChildNodeByValue(value, Regex.IsMatch);
 
          if(node_kvp.Value != null)
          {
@@ -34,7 +35,8 @@ public class ParseTree
       }
    }
 
-   public static Tree<string, string> ParseGrammar(string start,List<string> grammar, Dictionary<string, string> token_definitions)
+   public static Tree<string, string> 
+      ParseGrammar(string start,List<string> grammar, Dictionary<string, string> token_definitions)
    {
       Tree<string,string> tree = new Tree<string, string>();
       Dictionary<string, Node<string,string>> nodes = new Dictionary<string, Node<string, string>>();
@@ -45,7 +47,6 @@ public class ParseTree
          nodes[kvp.Key] = new Node<string, string>(kvp.Value);
       }
 
-      // 
       foreach(string line in grammar)
       {
          Match match = Regex.Match(line, @"([^:\s]+)\s?:\s?");
@@ -67,6 +68,7 @@ public class ParseTree
                Console.WriteLine($"definition {definition} does not exist!");
                return null;
             }
+
             tree.Insert(definition, nodes[definition]);
          }
 
@@ -76,7 +78,8 @@ public class ParseTree
          {
             if(!nodes.ContainsKey(value.Trim()))
             {
-               Console.WriteLine($"cannot set {definition} to {value.Trim()}, {value.Trim()} does not exist!");
+               Console.WriteLine
+                  ($"cannot set {definition} to {value.Trim()}, {value.Trim()} does not exist!");
 
                return null;
             }
@@ -87,7 +90,10 @@ public class ParseTree
 
       tree.Head();
 
+      tree.Traverse(start);
+
       return tree;
    }
+
 }
 
