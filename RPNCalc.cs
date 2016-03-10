@@ -12,7 +12,9 @@ public class RPNCalculator
          { "*", (x, y) => x * y },
          { "/", (x, y) => x / y }, 
          { "%", (x, y) => x % y },
-         { "^", (x, y) => (float)Math.Pow((int)x, (int)y) }
+         { "^", (x, y) => (float)Math.Pow((double)x, (double)y) },
+         { "max", (x, y) => (float)Math.Max((double)x, (double)y) },
+         { "min", (x, y) => (float)Math.Min((double)x, (double)y) }
       };
    private Dictionary<string, Func<float, float>> unary_operators 
       = new Dictionary<string, Func<float, float>>()
